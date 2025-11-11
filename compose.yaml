@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+  
+  script:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: persuasionforgood  # Image name
+    container_name: persuasionforgood_pilot  # Container name
+    depends_on:
+      - ollama
+    volumes:
+      - .:/Users/daren/Desktop/MSc Thesis Bau/thesis-zhukova
+    environment:
+      - REQUESTS_CA_BUNDLE=/Program Files/OpenSSL-Win64/bin/PEM/ca-key.pem
+    command: ["python", "persuasionforgood_pilot_week9-10.py"]
